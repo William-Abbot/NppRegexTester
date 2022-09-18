@@ -41,14 +41,23 @@ int main()
 
     smatch m;
 
-    cout << "the matches are: ";
+    cout << "contains: \n";
 
-    while (regex_search(s, m, rx)) {
-        cout << m.str() << " ";
-        s = m.suffix().str();
+    auto pos = s.cbegin();
+    auto end = s.cend();
+    for (; regex_search(pos, end, m, rx); pos = m.suffix().first) {
+        cout << "match: " << m.str() << endl;
+        cout << " tag: " << m.str(1) << endl;
+        cout << " value: " << m.str(2) << endl;
     }
 
     cout << endl;
+
+    smatch m1;
+    regex_match(s, m1, rx);
+
+    cout << "matches: ";
+    cout << m1.str() << endl;
 
 	return 0;
 }
